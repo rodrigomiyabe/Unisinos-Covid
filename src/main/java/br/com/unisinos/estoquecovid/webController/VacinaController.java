@@ -1,6 +1,7 @@
 package br.com.unisinos.estoquecovid.webController;
 
 import br.com.unisinos.estoquecovid.domain.entities.Vacina;
+import br.com.unisinos.estoquecovid.domain.services.EstoqueService;
 import br.com.unisinos.estoquecovid.domain.services.VacinaServices;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +21,11 @@ import java.util.List;
 public class VacinaController {
 
     private final VacinaServices vacinaServices;
+    private final EstoqueService estoqueService;
 
-    public VacinaController(VacinaServices vacinaServices) {
+    public VacinaController(VacinaServices vacinaServices, EstoqueService estoqueService) {
         this.vacinaServices = vacinaServices;
+        this.estoqueService = estoqueService;
     }
 
     @PostMapping("/cadastrar")
@@ -38,12 +41,12 @@ public class VacinaController {
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Object> deletar(@PathVariable Integer id){
      if(!vacinaServices.existePorId(id)){
-         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID INEXISTENTE");
-     }else if(vacinaServices.existePorId(id) && ){
-
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Vacina inexistente!");
+     }else if(vacinaServices.existePorId(id) && estoqueService.estoquePorId(id)>0){
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Vacina não pode ser deletada! Vacina com quantidade maior que 0");
      } else
          vacinaServices.excluir(id);
-     return ResponseEntity.status(HttpStatus.OK).body("SALVO COM SUCESSO");
+     return ResponseEntity.status(HttpStatus.OK).body("Salvo com sucesso!");
     }
 
     @ToString

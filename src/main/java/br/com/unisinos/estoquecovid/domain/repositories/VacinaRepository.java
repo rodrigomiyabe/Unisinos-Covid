@@ -10,4 +10,5 @@ public interface VacinaRepository extends JpaRepository<Vacina,Integer> {
 
     List<Vacina> findMaterialByDescricaoMaterial(String descricaoMaterial);
 
+
 }

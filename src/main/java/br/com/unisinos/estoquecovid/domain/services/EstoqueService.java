@@ -44,4 +44,8 @@ public class EstoqueService {
         return new Inventario(anomes, listaDto);
     }
 
+    public Integer estoquePorId(final Integer id){
+        return this.estoqueRepository.estoquePorId(id);
+    }
+
 }

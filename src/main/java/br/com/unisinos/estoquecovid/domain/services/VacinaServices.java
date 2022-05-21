@@ -41,9 +41,6 @@ public class VacinaServices {
         return this.vacinaRepository.existsById(id);
     }
 
-    public Integer existeQuantidadePorID(Integer id){
-        return this.vacinaRepository.
-    }
 
 
 }
